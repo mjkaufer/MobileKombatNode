@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<script src="lib/socket.io.js"></script>
+		<script src="lib/mk.js"></script>
+		<link rel="stylesheet" type="text/css" href="lib/style.css">
+	</head>
+	<body>
+			<div id="parent">
+				<div id="utils" style="visibility: visible;">
+					<div id="player1Name" class="playerName">Sub-Zero</div>
+					<div id="player1LifeBar" class="lifebar"><div class="life" id="player1Life"></div></div> 
+					<div id="player2Name" class="playerName">Kano</div>
+					<div id="player2LifeBar" class="lifebar"><div class="life" id="player2Life"></div></div> 
+					<canvas id="canvas"></canvas>
+				</div>
+				<div id="gameEnd">
+					<span id="gameOverLabel">
+						<span>Game over</span>
+						<br>press space to play again
+					</span>
+				</div>
+				<div id="arena" style="visibility: visible;">
+				<canvas width="600" height="400"></canvas></div> 
+			</div>
+			<div class="manual">
+				<div id="info">
+					<p>Text <code>&lt;player number&gt;&lt;action&gt;</code> to <code>(703) 991-4940</code></p>
+					<p>Example: <code>1HP</code> would make player 1 throw a high punch.</p>
+					<p>Player numbers: <code>1</code>, <code>2</code></p>
+					<p>Player commands: 
+						<code>L</code> (left),
+						<code>R</code> (right),
+						<code>U</code> (up),
+						<code>D</code> (down),
+						<code>B</code> (block),
+						<code>HK</code> (high kick),
+						<code>LK</code> (low kick),
+						<code>HP</code> (high punch),
+						<code>LP</code> (low punch)
+					</p>
+					<p>Space to restart</p><!--Need to work on a more elegant solution-->
+					
+					<p>A lot of this is a fork of <a href="https://github.com/mgechev/mk.js">mk.js</a></p>
+					<p>The text controls were implemented by me, Matthew Kaufer.</p>
+					<p>You can find the code <a href="http://github.com/mjkaufer/MobileKombatNode">here</a></p>
+					
+				</div>
+			</div>
+		
+		<script>
+			var socket = io.connect('http://localhost');//we'll probably need to change the port here, maybe the URL too
+			socket.on('cmd', function (data) {
+				console.log(data);
+			});
+
+			keymap = [
+			    {//player 1 keymaps
+			        R: 74,
+			        L: 71,
+			        U: 89,
+			        D: 72,//movement
+			        B: 16,//block
+			        HP: 65,//high punch
+			        LP: 83,//low
+			        LK: 68,//low kick
+			        HK: 70//high punch
+			    },
+			    {//player 2 keymaps
+			        R: 39,
+			        L: 37,
+			        U: 38,
+			        D: 40,
+			        B: 17,
+			        HP: 80,
+			        LP: 219,
+			        LK: 221,
+			        HK: 220 
+			    }
+			]
+
+		    socket.on('cmd', function(cmd) {
+		        //console.log(cmd);
+		        //cmd format is (action)*(phone number), e.g. 2HK*4044044004
+		        //action format should be (player #)(action), so something like 2HP or 1LK
+		        var from = cmd.substring(cmd.indexOf("*")+1);
+		        var message = cmd.substring(0, cmd.indexOf("*"));
+		        
+		        // console.log(message + " sent from " + from);//comment this out so people can't sniff who's sending what as easily
+		        
+		        cmd = cmd.substring(0, cmd.indexOf("*"));//cut off number
+		        
+		        cmd = cmd.replace(" ","").toUpperCase();
+		        try{
+		            var code = parseInt(keymap[parseInt(cmd.substr(0,1)) - 1][cmd.substring(1)]);
+		            
+		            mk.game.key(code, 400);
+		        } catch(e){
+		            console.log("whoops,",cmd,"is an invalid code");
+		        }
+		        
+		    });
+
+		</script>
+
+	</body>
+</html>
