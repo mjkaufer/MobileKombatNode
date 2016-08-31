@@ -24,7 +24,12 @@ Player commands:
 
 ##Live Demo
 
-A live demo will be up once I get this on Heroku
+Check out my hosted version [here](https://thawing-reaches-16401.herokuapp.com).
+
+##Todo
+
+* Implement a way for multiple games to be played simultaneously
+	* Have phone connect to a 'room'
 
 ##Installing it on your own
 
