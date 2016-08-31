@@ -48,7 +48,7 @@
 			</div>
 		
 		<script>
-			var socket = io.connect('http://localhost');//we'll probably need to change the port here, maybe the URL too
+			var socket = io.connect(location.href);//we'll probably need to change the port here, maybe the URL too
 			socket.on('cmd', function (data) {
 				console.log(data);
 			});
