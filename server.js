@@ -1,5 +1,9 @@
 var express = require('express')
+var bodyParser = require('body-parser');
+
 var app = express()
+app.use(bodyParser.urlencoded({ extended: false }));
+
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
@@ -11,12 +15,13 @@ app.get('/', function(req, res){
 	res.sendFile(__dirname + '/static/index.html')
 })
 
-app.get('/webhook', function(req, res){
+app.post('/webhook', function(req, res){
 	//handle webhook from twilio
-	io.emit('cmd','2L*123')
-	io.emit('cmd','2L*123')
-	io.emit('cmd','2L*123')
-
+	
+	
+	var from = req.body.From;
+    var text = req.body.Body;
+    io.emit('cmd', text + "*" + from)
 	res.writeHead(200, {'Content-Type': 'text/html'})
 	res.end('Success!')
 })
