@@ -22,7 +22,7 @@ Player commands:
 - `HP` (high punch),
 - `LP` (low punch)
 
-# Live Demo
+## Live Demo
 
 Check out my hosted version [here](https://thawing-reaches-16401.herokuapp.com).
 
