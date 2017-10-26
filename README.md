@@ -1,4 +1,4 @@
-#MobileKombatNode
+# MobileKombatNode
 
 This is a bit of a custom fork of [mk.js](https://github.com/mgechev/mk.js).
 
@@ -22,15 +22,15 @@ Player commands:
 - `HP` (high punch),
 - `LP` (low punch)
 
-##Live Demo
+## Live Demo
 
 Check out my hosted version [here](https://thawing-reaches-16401.herokuapp.com).
 
-##Todo
+## Todo
 
 * Implement a way for multiple games to be played simultaneously
 	* Have phone connect to a 'room'
 
-##Installing it on your own
+## Installing it on your own
 
 Installation is super simple. Clone the repo, run npm install, and point your twilio SMS webhook to http://yoururl/webhook. That's it!
